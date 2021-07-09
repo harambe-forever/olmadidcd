@@ -1,14 +1,28 @@
 `timescale 1ns / 1ps
 
 module controlUnit(input logic[15:0] immRD,
-output logic[1:0] RegSrc, output logic RegWrite, ALUsrc, 
-ALUctrl, MemWrite, MemToReg, PCSrc);
-/*logic[2:0] rd, 
-input logic[2:0] funct, input logic[3:0] opcode,
-output logic RegSrc, RegWrite, ALUsrc, 
-ALUctrl, MemWrite, MemToReg, PCSrc*/
+output logic[1:0] RegSrc, output logic[1:0]ALUctrl, 
+output logic RegWrite, ALUsrc, MemWrite, MemToReg, Branch, CheckCond);
+logic [2:0]cuRD;
 assign cuRD = immRD[5:3];
-assign cuFunct = immRD[2:0];
-assign cuOP = immRD[15:12];
+logic [1:0]cuFunct;
+assign cuFunct = immRD[1:0];
+logic [1:0]cuOP;
+assign cuOP = immRD[15:13];
 
+assign MemToReg = ~cuOP[0] & cuOP[1] & ~cuOP[2];
+assign MemWrite = cuOP[1] & cuOP[0];
+assign RegSrc[1] = cuOP[0] & cuOP[1];
+assign RegSrc[0] = (cuOP[0] | cuOP[1]) & cuOP[2];
+assign RegWrite = ~cuOP[2] & (~cuOP[0] | ~cuOP[1]);
+assign Branch = cuOP[2];
+assign ALUsrc = cuOP[0] | cuOP[1] | cuOP[2];
+always @(*)
+    begin
+        if(ALUsrc == 1'b0)
+            ALUctrl <= cuFunct;
+        else
+            ALUctrl <= 2'b00;
+    end
+assign CheckCond = cuOP[2] & ~cuOP[0];
 endmodule

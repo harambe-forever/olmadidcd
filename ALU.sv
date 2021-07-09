@@ -2,7 +2,7 @@
 
 module ALU(
     input logic [7:0] a, b,
-    input logic [2:0] ALUControl,
+    input logic [1:0] ALUControl,
     output logic [7:0] y, 
     output logic [3:0] flags
     );
