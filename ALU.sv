@@ -10,9 +10,6 @@ module ALU(
     wire [7:0] adderOutput, logicAnd, logicOr;
     wire adderOverflow;
     
-    wire [7:0] empty;
-    assign empty = 8'b0;
-    
     wire [7:0]bWire;
     assign bWire = ALUControl[0] ? (~b): b; // negates if ALUControl[0] is 0
     
@@ -22,13 +19,11 @@ module ALU(
     // 001 sub rd, ra, rb
     // 010 and rd, ra, rb
     // 011 or rd, ra, rb
-    // 100 addi rd, ra, imm
     
     assign logicAnd = a & b;
     assign logicOr = a | b;
     
-    mux8 muxResult(adderOutput, adderOutput, logicAnd, logicOr, adderOutput, empty, empty, empty,
-                                 ALUControl, y);
+    mux4 muxResult(adderOutput, adderOutput, logicAnd, logicOr, ALUControl, y);
     
     // flaglar aşağıda ayarlanacak Sıralaması -> N Z C V
     assign flags[3] = y[7]; // en değerli bit 1 ise negatif olduğundan

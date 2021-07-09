@@ -1,15 +1,14 @@
 `timescale 1ns / 1ps
 
 
-module pp4fullAdder(input logic [1:0] PC, input logic[2:0] b,
-input logic cin,
+module pp4fullAdder(input logic [7:0] PC,
 output logic [7:0] s,
 output logic cout );
 
-
-assign b = 3'b100;
+logic [7:0] b;
+assign b = 8'h01;
 wire [8:0] c;
-assign c=PC+1+cin;
+assign c=PC+b;
 assign cout=c[8];
 assign s=c[7:0];
 endmodule

@@ -7,7 +7,7 @@ logic [2:0]cuRD;
 assign cuRD = immRD[5:3];
 logic [1:0]cuFunct;
 assign cuFunct = immRD[1:0];
-logic [1:0]cuOP;
+logic [2:0]cuOP;
 assign cuOP = immRD[15:13];
 
 assign MemToReg = ~cuOP[0] & cuOP[1] & ~cuOP[2];
