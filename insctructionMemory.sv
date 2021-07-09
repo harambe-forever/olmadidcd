@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 
-module instructionMemory(input logic clk,input logic [1:0] PC,
+module instructionMemory(input logic clk,input logic [15:0] PC,
 output reg [15:0] RD);
 reg [15:0] rf1 [3:0];
 
