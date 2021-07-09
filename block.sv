@@ -15,14 +15,14 @@ wire [3:0] sppd, spps, muxra1out, muxra2out, ALUflags; // pp4 output, pp8 output
 //logic [1:0] PC;
 logic [2:0] b, c;
 
-muxpc pcmux(sppd, muxDataMemOut, PCsrc, pcin);
+muxpc pcmux(sppd, muxDataMemOut, Branch, pcin);
 CLOCK clock(pcin, clk, pcout);
 instructionMemory im(CLK,pcout,RD);
 pp4fullAdder pp4fa(pcout, b, cinpp4, sppd, coutpp4);
 mux19_16 muxra1(sa, 7, RegSrc[0], muxra1out);
 mux19_16 muxra2(bu, obd, RegSrc[1], muxra2out);
 pp4fullAdder pp8fa(sppd, c, cinpp8, spps, coutpp8);
-controlUnit control(RD, RegSrc, RegWrite, ALUsrc, ALUctrl, MemWrite, MemToReg, PCSrc);
+controlUnit control(RD, RegSrc, RegWrite, ALUsrc, ALUctrl, MemWrite, MemToReg, Branch);
 RegisterFile rf(muxra1out, muxra2out, obd, RegWrite, clk, muxDataMemOut, rd1, rd2);
 ALU alu(rd1, rd2, ALUctrl, ALUout, ALUflags); 
 DataMemory dataMemory(ALUout, MemWrite, clk, rd2, RDDM);

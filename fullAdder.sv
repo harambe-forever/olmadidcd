@@ -9,7 +9,7 @@ output logic cout );
 
 assign b = 3'b100;
 wire [8:0] c;
-assign c=PC+4+cin;
+assign c=PC+1+cin;
 assign cout=c[8];
 assign s=c[7:0];
 endmodule
