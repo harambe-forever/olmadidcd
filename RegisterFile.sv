@@ -19,17 +19,14 @@ module RegisterFile(
     rf[5] = 8'h00;
     rf[6] = 8'h00;
     end
-    
+
     assign rf[7] = r7;
     
     always @ (posedge clk) begin
-    
         rd1 <= rf[a1];
         rd2 <= rf[a2];
-        
         if(we)
             rf[a3] <= wd;
-    
     end
     
 endmodule

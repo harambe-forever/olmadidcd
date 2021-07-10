@@ -4,7 +4,7 @@ module testBench();
 logic clk;
 initial begin
 clk = 0;
-forever #10 clk = ~clk;
+forever #100 clk = ~clk;
 end
 
 wire[15:0] RD;
