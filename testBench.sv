@@ -8,9 +8,12 @@ forever #10 clk = ~clk;
 end
 
 wire[15:0] RD;
-wire [7:0] pcout;
+reg [7:0] pcout;
 reg [7:0] pcin;
-wire[7:0] rd1, rd2, ALUout, RDDM, muxDataMemOut; //RDDM: read data data memory
+wire[7:0] rd1, rd2;
+wire[7:0]RDDM, muxDataMemOut; //RDDM: read data data memory
+
+wire[7:0] ALUout;
 
 wire[5:0] imm;
 wire [2:0] obd, bu, sa, value4;
@@ -38,7 +41,7 @@ instructionMemory im(pcout,RD);
 mux19_16 muxra1(sa, value4, RegSrc[0], muxra1out);
 mux19_16 muxra2(bu, obd, RegSrc[1], muxra2out);
 controlUnit control(RD, RegSrc, ALUctrl, RegWrite, ALUsrc, MemWrite, MemToReg, Branch, CheckCond);
-RegisterFile rf(muxra1out, muxra2out, obd, RegWrite, clk, muxDataMemOut, rd1, rd2);
+RegisterFile rf(muxra1out, muxra2out, obd, RegWrite, clk, muxDataMemOut, sppd, rd1, rd2);
 ALU alu(rd1, rd2, ALUctrl, ALUout, ALUflags); 
 DataMemory dataMemory(ALUout, MemWrite, clk, rd2, RDDM);
 muxDataMem muxdataMem(ALUout, RDDM, MemToReg, muxDataMemOut);
