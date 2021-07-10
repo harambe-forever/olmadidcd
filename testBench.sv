@@ -9,8 +9,9 @@ initial begin
 clk = 0;
 forever #10 clk = ~clk;
 end
-
 wire[15:0] RD;
+logic [1:0]funct;
+assign funct =  RD[1:0];
 reg [7:0] pcout, pcin;
 wire[7:0] rd1, rd2, ALUout, RDDM, muxDataMemOut; //RDDM: read data data memory
 wire[5:0] imm;
@@ -26,6 +27,7 @@ assign imm = RD[5:0];
 assign obd = RD[12:10]; //obd = onbir dokuz destin
 assign bu = RD[6:4]; //bu = bes uc son reg
 assign sa = RD[9:7]; //sa = sekiz alti ilk reg
+//logic [1:0]funct = RD[1:0]; //funct bitleri
 assign value4 = 3'b111;
 
 
@@ -44,9 +46,6 @@ RegisterFile rf(muxra1out, muxra2out, obd, RegWrite, clk, muxDataMemOut, rd1, rd
 ALU alu(rd1, rd2, ALUctrl, ALUout, ALUflags); 
 DataMemory dataMemory(ALUout, MemWrite, clk, rd2, RDDM);
 muxDataMem muxdataMem(ALUout, RDDM, MemToReg, muxDataMemOut);
-
-
-
 
 
 /*initial begin
