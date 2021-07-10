@@ -5,15 +5,17 @@ logic CLK = 0;
 logic[15:0] instruction; 
 
 
-instructionMemory dut(CLK,ins);
+instruction dut(CLK,ins);
 
 initial begin
 forever #10 CLK = ~CLK;
 end
 
 initial begin
-instruction = 16'b000_000_001_010_00_00;
-instruction = 16'b000_001_011_001_00_01;
+instruction = 15'b100100101001010; #50;
+instruction = 15'b100101000101010; #50;
+instruction = 15'b001001010101000; #50;
+instruction = 15'b111010010111000; #50;
 
 end
 endmodule

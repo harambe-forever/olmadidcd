@@ -33,7 +33,6 @@ logic [2:0] b, c;
 muxpc pcmux(sppd, muxDataMemOut, Branch, pcin);
 CLOCK clock(pcin, clk, pcout);
 instructionMemory im(clk,pcout,RD);
-instruction inst(clk, RD, ALUctrl, ALUout, ALUflags);
 pp4fullAdder pp4fa(pcout, sppd, coutpp4);
 mux19_16 muxra1(sa, value4, RegSrc[0], muxra1out);
 mux19_16 muxra2(bu, obd, RegSrc[1], muxra2out);
@@ -44,15 +43,5 @@ ALU alu(rd1, rd2, ALUctrl, ALUout, ALUflags);
 DataMemory dataMemory(ALUout, MemWrite, clk, rd2, RDDM);
 muxDataMem muxdataMem(ALUout, RDDM, MemToReg, muxDataMemOut);
 
-initial begin
-assign pcin = 8'h00; #100;
-/*pcin = 8'h01; #100;
-pcin = 8'h02; #100;
-pcin = 8'h03; #100;
-pcin = 8'h04; #100;
-pcin = 8'h05; #100;
-pcin = 8'h06; #100;
-pcin = 8'h07; #100;
-pcin = 8'h08; #100;*/
-end
+initial assign pcin = 8'h00;
 endmodule
