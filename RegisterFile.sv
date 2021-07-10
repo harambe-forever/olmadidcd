@@ -27,7 +27,7 @@ module RegisterFile(
         rd2 <= rf[a2];
         
         if(we)
-            rf[a3] = wd;
+            rf[a3] <= wd;
     
     end
     
